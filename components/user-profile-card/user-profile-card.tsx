@@ -1,11 +1,10 @@
 "use client";
 import { useFavorites } from "@/hooks/useFavorites";
 import { User } from "@/types";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { IoIosHeart } from "react-icons/io";
-import styles from "./user-profile-card.module.scss";
 import SafeImage from "../safe-image/safe-image";
+import styles from "./user-profile-card.module.scss";
 
 interface UserProfileCardProps {
   user: User;

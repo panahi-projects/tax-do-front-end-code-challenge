@@ -1,9 +1,8 @@
 "use client";
+import SafeImage from "@/components/safe-image/safe-image";
 import { useTheme } from "@/providers/ThemeProvider";
-import Image from "next/image";
 import Link from "next/link";
 import styles from "./logo.module.scss";
-import SafeImage from "@/components/safe-image/safe-image";
 
 const Logo = () => {
   const { theme } = useTheme();

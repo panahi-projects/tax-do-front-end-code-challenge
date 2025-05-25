@@ -11,11 +11,12 @@
   }
 
   &__search-input {
-    padding: 0.5rem 3rem 0.5rem;
+    padding: 0.5rem 1rem 0.5rem 3rem;
     border: 1px solid var(--border-color);
     width: 100%;
     background-color: var(--bg-background);
     border-radius: 4px;
+    min-width: 300px;
 
     &::placeholder {
       color: var(--text-mute);

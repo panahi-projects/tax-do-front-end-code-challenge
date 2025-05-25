@@ -1,9 +1,8 @@
-import Image from "next/image";
-import styles from "./user-card.module.scss";
-import { User } from "@/types";
 import config from "@/config";
+import { User } from "@/types";
 import { useRouter } from "next/navigation";
 import SafeImage from "../safe-image/safe-image";
+import styles from "./user-card.module.scss";
 
 interface UserCardProps {
   user: User;
