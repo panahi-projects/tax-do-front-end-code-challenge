@@ -25,9 +25,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="theme-root">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`theme-wrapper ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider>
           <Header />
