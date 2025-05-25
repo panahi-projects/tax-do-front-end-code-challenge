@@ -1,0 +1,23 @@
+// @use "../../styles/mixins" as mixins;
+
+.user-cards {
+  padding: 1rem 0.1rem;
+  margin: 1rem auto;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  max-height: max-content;
+  overflow-y: scroll;
+
+  @include mixins.responsive("lg") {
+    width: var(--br-md);
+  }
+  @include mixins.responsive("md") {
+    width: var(--br-sm);
+  }
+  @include mixins.responsive("sm") {
+    width: var(--br-xs);
+  }
+  @include mixins.responsive("xs") {
+    width: 90%;
+  }
+}

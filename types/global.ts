@@ -1,2 +1,2 @@
 export type EmailString = `${string}@${string}.${string}`;
-export type PhoneString = `+${string}` | `0${string}`;
+export type PhoneString = `+${number}` | `${number}`;

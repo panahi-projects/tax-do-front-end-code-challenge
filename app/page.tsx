@@ -1,5 +1,9 @@
-import Image from "next/image";
+import UserCardList from "@/components/user-card-list/user-card-list";
 
 export default function Home() {
-  return <div>Home</div>;
+  return (
+    <div>
+      <UserCardList />
+    </div>
+  );
 }
