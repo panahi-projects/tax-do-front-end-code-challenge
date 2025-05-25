@@ -1,3 +1,4 @@
+import BackToTopButton from "@/components/layout/back-to-top-button/back-to-top-button";
 import Header from "@/components/layout/header/header";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import "@/styles/globals.scss";
@@ -32,6 +33,7 @@ export default function RootLayout({
         <ThemeProvider>
           <Header />
           <main>{children}</main>
+          <BackToTopButton />
         </ThemeProvider>
       </body>
     </html>
