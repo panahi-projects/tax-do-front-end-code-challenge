@@ -1,6 +1,5 @@
 // components/FavoriteList.tsx
 import { useFavorites } from "@/hooks/useFavorites";
-import { useUserListController } from "@/hooks/useUserListController";
 import UserCard from "../user-card/user-card";
 
 const FavoriteList = () => {

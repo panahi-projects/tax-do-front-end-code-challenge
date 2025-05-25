@@ -9,8 +9,8 @@
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
-  background-color: #0070f3;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--text-on-accent);
   border: none;
   cursor: pointer;
   display: flex;
@@ -22,7 +22,7 @@
   outline: none;
 
   &:hover {
-    background-color: darken(#0070f3, 10%);
+    background-color: var(--primary-hover);
     transform: translateY(-3px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   }

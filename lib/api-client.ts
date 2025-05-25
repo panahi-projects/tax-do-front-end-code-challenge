@@ -1,12 +1,5 @@
 import config from "@/config";
-import {
-  ApiClientConfig,
-  ApiResponse,
-  PaginatedResponse,
-  PaginationParams,
-  RandomUserApiResponse,
-  RelativeUrl,
-} from "@/types";
+import { ApiResponse } from "@/types";
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 
 class ApiClient {
@@ -27,7 +20,7 @@ class ApiClient {
   }
   public async post<T>(
     url: string,
-    data?: any,
+    data?: unknown,
     config?: AxiosRequestConfig
   ): Promise<ApiResponse<T>> {
     return this.instance.post<T>(url, data, config);
@@ -35,7 +28,7 @@ class ApiClient {
 
   public async put<T>(
     url: string,
-    data?: any,
+    data?: unknown,
     config?: AxiosRequestConfig
   ): Promise<ApiResponse<T>> {
     return this.instance.put<T>(url, data, config);
@@ -50,7 +43,7 @@ class ApiClient {
 
   public async patch<T>(
     url: string,
-    data?: any,
+    data?: unknown,
     config?: AxiosRequestConfig
   ): Promise<ApiResponse<T>> {
     return this.instance.patch<T>(url, data, config);

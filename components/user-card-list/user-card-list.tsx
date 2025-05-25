@@ -87,7 +87,7 @@ const UserCardList = () => {
         )}
         {!hasMore && data.length > 0 && (
           <p className={styles["user-list__loading-message"]}>
-            You've reached the end
+            You have reached the end
           </p>
         )}
       </div>
