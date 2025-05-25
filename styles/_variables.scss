@@ -1,0 +1,116 @@
+:root {
+  // Background colors
+  --bg-background: #ffffff;
+  --bg-background-secondary: #f8f8f8;
+  --bg-background-tertiary: #f0f0f0;
+
+  // Text colors
+  --text-primary: #222222;
+  --text-secondary: #666666;
+  --text-tertiary: #999999;
+  --text-on-accent: #ffffff;
+
+  // Accent colors
+  --primary-color: #0070f3;
+  --primary-hover: #0061d5;
+  --secondary-color: #7928ca;
+  --secondary-hover: #6a23b5;
+
+  // State colors
+  --success-color: #17c964;
+  --error-color: #f21361;
+  --warning-color: #f5a623;
+  --info-color: #1da1f2;
+
+  // Borders
+  --border-color: #eaeaea;
+  --border-color-dark: #dddddd;
+  --border-radius: 4px;
+  --border-width: 1px;
+
+  // Shadows
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+  // Font families
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-mono: Menlo, Monaco, "Lucida Console", "Liberation Mono",
+    "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace;
+  --font-serif: Georgia, "Times New Roman", Times, serif;
+
+  // Spacing
+  --space-unit: 1em;
+  --space-xxs: calc(0.25 * var(--space-unit));
+  --space-xs: calc(0.5 * var(--space-unit));
+  --space-sm: calc(0.75 * var(--space-unit));
+  --space-md: calc(1.25 * var(--space-unit));
+  --space-lg: calc(2 * var(--space-unit));
+  --space-xl: calc(3.25 * var(--space-unit));
+  --space-xxl: calc(5.25 * var(--space-unit));
+
+  // Layout
+  --max-width: 1200px;
+  --header-height: 60px;
+
+  // Shadows
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+  // Transitions
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+// Dark Mode Overrides
+.dark {
+  --bg-background: #121212;
+  --bg-background-secondary: #1e1e1e;
+  --bg-background-tertiary: #2a2a2a;
+
+  --text-primary: #ffffff;
+  --text-secondary: #bbbbbb;
+  --text-tertiary: #888888;
+
+  --primary-color: #3291ff;
+  --primary-hover: #2684f8;
+  --secondary-color: #8a63d2;
+  --secondary-hover: #7b55c7;
+
+  --border-color: #333333;
+  --border-color-dark: #444444;
+
+  // Dark mode shadows
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4),
+    0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5),
+    0 4px 6px -2px rgba(0, 0, 0, 0.4);
+}
+
+// Breakpoints
+$breakpoints: (
+  "xs": 480px,
+  "sm": 640px,
+  "md": 768px,
+  "lg": 1024px,
+  "xl": 1280px,
+  "xxl": 1536px,
+);
+
+// Z-index layers
+$z-layers: (
+  "bottom": -1,
+  "default": 1,
+  "dropdown": 100,
+  "overlay": 200,
+  "modal": 300,
+  "top": 9999,
+);
