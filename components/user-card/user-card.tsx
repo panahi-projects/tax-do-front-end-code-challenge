@@ -12,17 +12,19 @@ const UserCard: React.FC<UserCardProps> = ({ user, index }) => {
   return (
     <div className={styles["user-card"]}>
       <div className={styles["user-card__index"]}>{index}</div>
-      <Image
-        src={user.picture.medium}
-        width={48}
-        height={48}
-        alt="alt"
-        className={styles["user-card__avatar"]}
-      />
+      {user.picture.medium && (
+        <Image
+          src={user.picture.medium}
+          width={48}
+          height={48}
+          alt="alt"
+          className={styles["user-card__avatar"]}
+        />
+      )}
+
       <div className={styles["user-card__main-name"]}>
         <div className={styles["user-card__name"]}>
-          <span>{user.name.first}</span>
-          <span>{user.name.last}</span>
+          {user.name.first} {user.name.last}
         </div>
         <div className={styles["user-card__gender"]}>{user.gender}</div>
       </div>

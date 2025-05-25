@@ -11,14 +11,12 @@ import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 
 class ApiClient {
   private instance: AxiosInstance;
-  private defaultPageSize: number;
 
   constructor() {
     this.instance = axios.create({
       baseURL: config.apiBaseUrl,
       timeout: config.requestTimeout,
     });
-    this.defaultPageSize = config.defaultPageSize || 10;
   }
 
   public async get<T>(

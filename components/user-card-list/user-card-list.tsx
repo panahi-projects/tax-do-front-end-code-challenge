@@ -1,7 +1,10 @@
+"use client";
 import { RandomUserApiResponse, User } from "@/types";
 import UserCard from "../user-card/user-card";
 import styles from "./user-card-list.module.scss";
 import { apiClient } from "@/lib/api-client";
+import useInfiniteScrollApi from "@/hooks/useInfiniteScrollApi";
+import { motion, AnimatePresence } from "framer-motion";
 
 const MOCK: RandomUserApiResponse = {
   results: [
@@ -237,19 +240,81 @@ const MOCK: RandomUserApiResponse = {
   info: { seed: "a84a3a7c718f08f5", results: 1, page: 1, version: "1.4" },
 };
 
-const UserCardList = async () => {
+const UserCardList = () => {
   const items = MOCK.results;
-  const { data } = await apiClient.get<RandomUserApiResponse>(
-    "/?page=1&results=5&seed=abc"
-  );
+  // const { data } = await apiClient.get<RandomUserApiResponse>(
+  //   "/?page=1&results=5&seed=abc"
+  // );
 
-  console.log(data);
+  // console.log(data);
+  const {
+    data,
+    isLoading,
+    isLoadingMore,
+    error,
+    hasMore,
+    loadingRef,
+    refresh,
+  } = useInfiniteScrollApi<RandomUserApiResponse>({
+    pageSize: 10,
+    threshold: 300,
+  });
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  if (isLoading && !data.length) {
+    return (
+      <div className="flex justify-center py-8">Loading initial data...</div>
+    );
+  }
 
   return (
-    <div className={`${styles["user-cards"]} container`}>
-      {items.map((item, index) => (
-        <UserCard key={item.id.value} index={index + 1} user={item} />
-      ))}
+    <div className={styles["user-list"]}>
+      <button
+        onClick={refresh}
+        disabled={isLoading}
+        className={styles["user-list__refresh-btn"]}
+      >
+        Refresh
+      </button>
+
+      <AnimatePresence>
+        {data.map((user, index) => (
+          <motion.div
+            key={user.login.uuid}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className={styles["user-list__card"]}
+          >
+            <div className={`${styles["user-cards"]} container`}>
+              <UserCard key={user.id.value} index={index + 1} user={user} />
+            </div>
+          </motion.div>
+        ))}
+      </AnimatePresence>
+
+      {/* Subtle loading indicator at bottom */}
+      <div ref={loadingRef} className={styles["user-list__loading"]}>
+        {isLoadingMore && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className={styles["user-list__loading-indicator"]}
+          >
+            <div className={styles["user-list__loading-spinner"]}></div>
+            <span>Loading more...</span>
+          </motion.div>
+        )}
+        {!hasMore && data.length > 0 && (
+          <p className={styles["user-list__loading-message"]}>
+            You've reached the end
+          </p>
+        )}
+      </div>
     </div>
   );
 };
