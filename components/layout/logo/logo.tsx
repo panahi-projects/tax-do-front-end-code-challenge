@@ -1,8 +1,8 @@
 "use client";
+import { useTheme } from "@/providers/ThemeProvider";
+import Image from "next/image";
 import Link from "next/link";
 import styles from "./logo.module.scss";
-import Image from "next/image";
-import { useTheme } from "@/providers/ThemeProvider";
 
 const Logo = () => {
   const { theme } = useTheme();

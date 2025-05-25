@@ -2,17 +2,18 @@
   // Background colors
   --bg-background: #ffffff;
   --bg-background-secondary: #f8f8f8;
-  --bg-background-tertiary: #f0f0f0;
+  --bg-background-tertiary: rgb(28, 28, 28);
+  --bg-background-tertiary-hover: rgba(28, 28, 28, 0.7);
 
   // Text colors
   --text-primary: #222222;
   --text-secondary: #666666;
   --text-tertiary: #999999;
-  --text-on-accent: #ffffff;
+  --text-on-accent: #fafafa;
 
   // Accent colors
-  --primary-color: #0070f3;
-  --primary-hover: #0061d5;
+  --primary-color: #222222;
+  --primary-hover: #000000;
   --secondary-color: #7928ca;
   --secondary-hover: #6a23b5;
 
@@ -73,11 +74,13 @@
 .dark {
   --bg-background: #121212;
   --bg-background-secondary: #1e1e1e;
-  --bg-background-tertiary: #2a2a2a;
+  --bg-background-tertiary: rgb(240, 240, 240);
+  --bg-background-tertiary-hover: rgba(240, 240, 240, 0.7);
 
   --text-primary: #ffffff;
   --text-secondary: #bbbbbb;
   --text-tertiary: #888888;
+  --text-on-accent: #1c1c1c;
 
   --primary-color: #3291ff;
   --primary-hover: #2684f8;
