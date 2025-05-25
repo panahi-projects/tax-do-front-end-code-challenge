@@ -18,6 +18,7 @@ const Logo = () => {
         height={29}
         alt="TaxDo"
       />
+      <h1 className="sr-only">TaxDo</h1>
     </Link>
   );
 };
