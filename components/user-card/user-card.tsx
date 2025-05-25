@@ -3,6 +3,7 @@ import styles from "./user-card.module.scss";
 import { User } from "@/types";
 import config from "@/config";
 import { useRouter } from "next/navigation";
+import SafeImage from "../safe-image/safe-image";
 
 interface UserCardProps {
   user: User;
@@ -19,12 +20,14 @@ const UserCard: React.FC<UserCardProps> = ({ user, index }) => {
       {index && <div className={styles["user-card__index"]}>{index}</div>}
 
       {user.picture.medium && (
-        <Image
+        <SafeImage
           src={user.picture.medium}
           width={48}
           height={48}
           alt="alt"
           className={styles["user-card__avatar"]}
+          unoptimized={process.env.NODE_ENV !== "production"} // Only optimize in production
+          priority={(index && index < 3) as boolean}
         />
       )}
 
@@ -48,7 +51,7 @@ const UserCard: React.FC<UserCardProps> = ({ user, index }) => {
       </div>
 
       {/* Country Flag */}
-      <Image
+      <SafeImage
         src={`${config.flagCDN}${(user.nat || "ir").toLocaleLowerCase()}.webp`}
         width={24}
         height={18}

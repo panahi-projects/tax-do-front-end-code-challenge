@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "randomuser.me",
-        pathname: "/api/**",
+        pathname: "/api/portraits/**",
       },
       {
         protocol: "https",
@@ -20,10 +20,12 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
     ],
-    minimumCacheTTL: 60, // Cache images for 60 seconds
+    minimumCacheTTL: 60 * 5, // Cache images for 5 minutes
     formats: ["image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { IoIosHeart } from "react-icons/io";
 import styles from "./user-profile-card.module.scss";
+import SafeImage from "../safe-image/safe-image";
 
 interface UserProfileCardProps {
   user: User;
@@ -30,7 +31,7 @@ const UserProfileCard = ({ user }: UserProfileCardProps) => {
   return (
     <div className={`${styles["user-profile-card"]}`}>
       {user.picture?.medium && (
-        <Image
+        <SafeImage
           width={96}
           height={96}
           src={user.picture.medium}
