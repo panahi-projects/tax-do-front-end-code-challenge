@@ -1,6 +1,7 @@
-import { RandomUserApiResponse } from "@/types";
+import { RandomUserApiResponse, User } from "@/types";
 import UserCard from "../user-card/user-card";
 import styles from "./user-card-list.module.scss";
+import { apiClient } from "@/lib/api-client";
 
 const MOCK: RandomUserApiResponse = {
   results: [
@@ -236,8 +237,14 @@ const MOCK: RandomUserApiResponse = {
   info: { seed: "a84a3a7c718f08f5", results: 1, page: 1, version: "1.4" },
 };
 
-const UserCardList = () => {
+const UserCardList = async () => {
   const items = MOCK.results;
+  const { data } = await apiClient.get<RandomUserApiResponse>(
+    "/?page=1&results=5&seed=abc"
+  );
+
+  console.log(data);
+
   return (
     <div className={`${styles["user-cards"]} container`}>
       {items.map((item, index) => (
