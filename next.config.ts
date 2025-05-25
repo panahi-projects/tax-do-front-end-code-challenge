@@ -7,12 +7,23 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "randomuser.me",
+        pathname: "/api/**",
       },
       {
         protocol: "https",
         hostname: "flagcdn.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "flagsapi.com",
+        pathname: "/**",
       },
     ],
+    minimumCacheTTL: 60, // Cache images for 60 seconds
+    formats: ["image/webp"],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],
