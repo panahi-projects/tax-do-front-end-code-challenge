@@ -2,16 +2,22 @@ import Image from "next/image";
 import styles from "./user-card.module.scss";
 import { User } from "@/types";
 import config from "@/config";
+import { useRouter } from "next/navigation";
 
 interface UserCardProps {
   user: User;
-  index: number;
+  index?: number;
 }
 
 const UserCard: React.FC<UserCardProps> = ({ user, index }) => {
+  const router = useRouter();
+  const onRedirectToProfile = () => {
+    router.push(`/user-profile/${user.id.value}`);
+  };
   return (
-    <div className={styles["user-card"]}>
-      <div className={styles["user-card__index"]}>{index}</div>
+    <div className={styles["user-card"]} onClick={onRedirectToProfile}>
+      {index && <div className={styles["user-card__index"]}>{index}</div>}
+
       {user.picture.medium && (
         <Image
           src={user.picture.medium}

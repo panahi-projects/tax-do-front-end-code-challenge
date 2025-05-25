@@ -9,7 +9,8 @@ const Header = () => {
       <div className={styles.container}>
         <Logo />
         <nav className={styles.nav}>
-          <Link href="/signin">SignIn</Link>
+          <Link href="/">Home</Link>
+          <Link href="/favorites">Favorites</Link>
           <ThemeToggle />
         </nav>
       </div>
