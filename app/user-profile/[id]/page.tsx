@@ -65,12 +65,7 @@ const UserProfilePage = () => {
 
   return (
     <div className={`container`}>
-      <UserProfileCard
-        name={`${user?.name.first} ${user?.name.last}`}
-        gender={user?.gender as "male" | "female"}
-        avatarUrl={user?.picture.medium}
-        email={user?.email}
-      />
+      <UserProfileCard user={user} />
     </div>
   );
 };

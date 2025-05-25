@@ -1,51 +1,59 @@
 "use client";
-import { EmailString } from "@/types";
+import { EmailString, User } from "@/types";
 import styles from "./user-profile-card.module.scss";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosHeart } from "react-icons/io";
+import { useFavorites } from "@/hooks/useFavorites";
 
 interface UserProfileCardProps {
-  avatarUrl?: string;
-  name: string;
-  gender?: string;
-  email?: EmailString;
+  user: User;
 }
 
-const UserProfileCard = ({
-  avatarUrl,
-  name,
-  gender,
-  email,
-}: UserProfileCardProps) => {
-  const [isFavorite, setIsFavorite] = useState(false);
+const UserProfileCard = ({ user }: UserProfileCardProps) => {
+  const { isFavorite, addFavorite, removeFavorite } = useFavorites();
+  const [isInFavorite, setIsInFavorite] = useState(false);
+
+  useEffect(() => {
+    setIsInFavorite(isFavorite(user.email));
+  }, [isFavorite, user.email]);
 
   const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
+    if (isInFavorite) {
+      removeFavorite(user.email);
+    } else {
+      addFavorite(user);
+    }
+    setIsInFavorite(!isInFavorite);
   };
+
   return (
     <div className={`${styles["user-profile-card"]}`}>
-      {avatarUrl && (
+      {user.picture?.medium && (
         <Image
           width={96}
           height={96}
-          src={avatarUrl}
-          alt={name}
+          src={user.picture.medium}
+          alt={user.name.last}
           className={styles["user-profile-card__avatar"]}
         />
       )}
 
-      <h3 className={styles["user-profile-card__name"]}>{name}</h3>
-      <p className={styles["user-profile-card__email"]}>{email}</p>
+      <h3 className={styles["user-profile-card__name"]}>
+        {user.name.first} {user.name.last}
+      </h3>
+      <p className={styles["user-profile-card__email"]}>{user.email}</p>
       <div className={styles["user-profile-card__actions"]}>
         <button
           onClick={toggleFavorite}
           className={`${styles["user-profile-card__favorite-btn"]} ${
-            isFavorite ? styles["user-profile-card__favorite-btn--active"] : ""
+            isInFavorite
+              ? styles["user-profile-card__favorite-btn--active"]
+              : ""
           }`}
         >
           <IoIosHeart className={styles["user-profile-card__favorite-icon"]} />
-          {isFavorite ? "Favorited" : "Add to Favorite"}
+          {isInFavorite ? "Favorited !!!" : "Add to Favorite"}
         </button>
       </div>
     </div>
