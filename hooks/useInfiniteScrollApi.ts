@@ -10,6 +10,7 @@ interface UseInfiniteScrollApiOptions<T> {
   pageSize?: number;
   threshold?: number;
   onError?: (error: Error) => void;
+  initialUrl?: RelativeUrl;
 }
 
 const useInfiniteScrollApi = <T extends RandomUserApiResponse>({
@@ -25,7 +26,7 @@ const useInfiniteScrollApi = <T extends RandomUserApiResponse>({
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const [hasMore, setHasMore] = useState(true);
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState<RelativeUrl>("/?page=1&results=10");
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadingRef = useRef<HTMLDivElement | null>(null);
   const isInitialMount = useRef(true);
@@ -39,8 +40,10 @@ const useInfiniteScrollApi = <T extends RandomUserApiResponse>({
       setError(null);
 
       try {
-        const urlWithParams: RelativeUrl = `/?page=${page}&results=${pageSize}&seed=abc`;
-        const response = await apiClient.get<T>(urlWithParams);
+        const urlObj = new URL(url, config.apiBaseUrl);
+        urlObj.searchParams.set("page", page.toString());
+
+        const response = await apiClient.get<T>(urlObj.search as RelativeUrl);
         const newData = response.data;
 
         setData((prev) =>

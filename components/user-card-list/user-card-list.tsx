@@ -1,252 +1,22 @@
 "use client";
-import { RandomUserApiResponse, User } from "@/types";
+import { useDebounce } from "@/hooks/useDebounce";
+import useInfiniteScrollApi from "@/hooks/useInfiniteScrollApi";
+import { RandomUserApiResponse, RelativeUrl } from "@/types";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { IoRefresh } from "react-icons/io5";
+import SearchInput from "../search-input/search-input";
 import UserCard from "../user-card/user-card";
 import styles from "./user-card-list.module.scss";
-import { apiClient } from "@/lib/api-client";
-import useInfiniteScrollApi from "@/hooks/useInfiniteScrollApi";
-import { motion, AnimatePresence } from "framer-motion";
-
-const MOCK: RandomUserApiResponse = {
-  results: [
-    {
-      gender: "female",
-      name: { title: "Mrs", first: "Simona", last: "Støle" },
-      location: {
-        street: { number: 9188, name: "Granhekkveien" },
-        city: "Heggenes",
-        state: "Finnmark - Finnmárku",
-        country: "Norway",
-        postcode: "6443",
-        coordinates: { latitude: "43.6510", longitude: "54.4102" },
-        timezone: {
-          offset: "-6:00",
-          description: "Central Time (US & Canada), Mexico City",
-        },
-      },
-      email: "simona.stole@example.com",
-      login: {
-        uuid: "dd53e444-880c-4fc2-b14c-919d0581f87a",
-        username: "silvermeercat207",
-        password: "datsun",
-        salt: "GdV7WjBh",
-        md5: "ba8ac29a1f4f5da756917cde0a641c75",
-        sha1: "2711d4e71e4ca054b00cfa9eeecd4fb5ceb8c177",
-        sha256:
-          "c294a5d63a4d352cabc20be926f274e912f72cfb098f6546bf2d3d1bc872ffb9",
-      },
-      dob: { date: "1977-09-15T20:03:21.437Z", age: 47 },
-      registered: { date: "2019-09-23T14:28:14.229Z", age: 5 },
-      phone: "55095464",
-      cell: "49152546",
-      id: { name: "FN", value: "15097705821" },
-      picture: {
-        large: "https://randomuser.me/api/portraits/women/0.jpg",
-        medium: "https://randomuser.me/api/portraits/med/women/0.jpg",
-        thumbnail: "https://randomuser.me/api/portraits/thumb/women/0.jpg",
-      },
-      nat: "NO",
-    },
-    {
-      gender: "female",
-      name: { title: "Mrs", first: "Simona", last: "Støle" },
-      location: {
-        street: { number: 9188, name: "Granhekkveien" },
-        city: "Heggenes",
-        state: "Finnmark - Finnmárku",
-        country: "Norway",
-        postcode: "6443",
-        coordinates: { latitude: "43.6510", longitude: "54.4102" },
-        timezone: {
-          offset: "-6:00",
-          description: "Central Time (US & Canada), Mexico City",
-        },
-      },
-      email: "simona.stole@example.com",
-      login: {
-        uuid: "dd53e444-880c-4fc2-b14c-919d0581f87a",
-        username: "silvermeercat207",
-        password: "datsun",
-        salt: "GdV7WjBh",
-        md5: "ba8ac29a1f4f5da756917cde0a641c75",
-        sha1: "2711d4e71e4ca054b00cfa9eeecd4fb5ceb8c177",
-        sha256:
-          "c294a5d63a4d352cabc20be926f274e912f72cfb098f6546bf2d3d1bc872ffb9",
-      },
-      dob: { date: "1977-09-15T20:03:21.437Z", age: 47 },
-      registered: { date: "2019-09-23T14:28:14.229Z", age: 5 },
-      phone: "55095464",
-      cell: "49152546",
-      id: { name: "FN", value: "15097705822" },
-      picture: {
-        large: "https://randomuser.me/api/portraits/women/0.jpg",
-        medium: "https://randomuser.me/api/portraits/med/women/0.jpg",
-        thumbnail: "https://randomuser.me/api/portraits/thumb/women/0.jpg",
-      },
-      nat: "NO",
-    },
-    {
-      gender: "female",
-      name: { title: "Mrs", first: "Simona", last: "Støle" },
-      location: {
-        street: { number: 9188, name: "Granhekkveien" },
-        city: "Heggenes",
-        state: "Finnmark - Finnmárku",
-        country: "Norway",
-        postcode: "6443",
-        coordinates: { latitude: "43.6510", longitude: "54.4102" },
-        timezone: {
-          offset: "-6:00",
-          description: "Central Time (US & Canada), Mexico City",
-        },
-      },
-      email: "simona.stole@example.com",
-      login: {
-        uuid: "dd53e444-880c-4fc2-b14c-919d0581f87a",
-        username: "silvermeercat207",
-        password: "datsun",
-        salt: "GdV7WjBh",
-        md5: "ba8ac29a1f4f5da756917cde0a641c75",
-        sha1: "2711d4e71e4ca054b00cfa9eeecd4fb5ceb8c177",
-        sha256:
-          "c294a5d63a4d352cabc20be926f274e912f72cfb098f6546bf2d3d1bc872ffb9",
-      },
-      dob: { date: "1977-09-15T20:03:21.437Z", age: 47 },
-      registered: { date: "2019-09-23T14:28:14.229Z", age: 5 },
-      phone: "55095464",
-      cell: "49152546",
-      id: { name: "FN", value: "15097705823" },
-      picture: {
-        large: "https://randomuser.me/api/portraits/women/0.jpg",
-        medium: "https://randomuser.me/api/portraits/med/women/0.jpg",
-        thumbnail: "https://randomuser.me/api/portraits/thumb/women/0.jpg",
-      },
-      nat: "NO",
-    },
-    {
-      gender: "female",
-      name: { title: "Mrs", first: "Simona", last: "Støle" },
-      location: {
-        street: { number: 9188, name: "Granhekkveien" },
-        city: "Heggenes",
-        state: "Finnmark - Finnmárku",
-        country: "Norway",
-        postcode: "6443",
-        coordinates: { latitude: "43.6510", longitude: "54.4102" },
-        timezone: {
-          offset: "-6:00",
-          description: "Central Time (US & Canada), Mexico City",
-        },
-      },
-      email: "simona.stole@example.com",
-      login: {
-        uuid: "dd53e444-880c-4fc2-b14c-919d0581f87a",
-        username: "silvermeercat207",
-        password: "datsun",
-        salt: "GdV7WjBh",
-        md5: "ba8ac29a1f4f5da756917cde0a641c75",
-        sha1: "2711d4e71e4ca054b00cfa9eeecd4fb5ceb8c177",
-        sha256:
-          "c294a5d63a4d352cabc20be926f274e912f72cfb098f6546bf2d3d1bc872ffb9",
-      },
-      dob: { date: "1977-09-15T20:03:21.437Z", age: 47 },
-      registered: { date: "2019-09-23T14:28:14.229Z", age: 5 },
-      phone: "55095464",
-      cell: "49152546",
-      id: { name: "FN", value: "15097705824" },
-      picture: {
-        large: "https://randomuser.me/api/portraits/women/0.jpg",
-        medium: "https://randomuser.me/api/portraits/med/women/0.jpg",
-        thumbnail: "https://randomuser.me/api/portraits/thumb/women/0.jpg",
-      },
-      nat: "NO",
-    },
-    {
-      gender: "female",
-      name: { title: "Mrs", first: "Simona", last: "Støle" },
-      location: {
-        street: { number: 9188, name: "Granhekkveien" },
-        city: "Heggenes",
-        state: "Finnmark - Finnmárku",
-        country: "Norway",
-        postcode: "6443",
-        coordinates: { latitude: "43.6510", longitude: "54.4102" },
-        timezone: {
-          offset: "-6:00",
-          description: "Central Time (US & Canada), Mexico City",
-        },
-      },
-      email: "simona.stole@example.com",
-      login: {
-        uuid: "dd53e444-880c-4fc2-b14c-919d0581f87a",
-        username: "silvermeercat207",
-        password: "datsun",
-        salt: "GdV7WjBh",
-        md5: "ba8ac29a1f4f5da756917cde0a641c75",
-        sha1: "2711d4e71e4ca054b00cfa9eeecd4fb5ceb8c177",
-        sha256:
-          "c294a5d63a4d352cabc20be926f274e912f72cfb098f6546bf2d3d1bc872ffb9",
-      },
-      dob: { date: "1977-09-15T20:03:21.437Z", age: 47 },
-      registered: { date: "2019-09-23T14:28:14.229Z", age: 5 },
-      phone: "55095464",
-      cell: "49152546",
-      id: { name: "FN", value: "15097705820" },
-      picture: {
-        large: "https://randomuser.me/api/portraits/women/0.jpg",
-        medium: "https://randomuser.me/api/portraits/med/women/0.jpg",
-        thumbnail: "https://randomuser.me/api/portraits/thumb/women/0.jpg",
-      },
-      nat: "NO",
-    },
-    {
-      gender: "female",
-      name: { title: "Mrs", first: "Simona", last: "Støle" },
-      location: {
-        street: { number: 9188, name: "Granhekkveien" },
-        city: "Heggenes",
-        state: "Finnmark - Finnmárku",
-        country: "Norway",
-        postcode: "6443",
-        coordinates: { latitude: "43.6510", longitude: "54.4102" },
-        timezone: {
-          offset: "-6:00",
-          description: "Central Time (US & Canada), Mexico City",
-        },
-      },
-      email: "simona.stole@example.com",
-      login: {
-        uuid: "dd53e444-880c-4fc2-b14c-919d0581f87a",
-        username: "silvermeercat207",
-        password: "datsun",
-        salt: "GdV7WjBh",
-        md5: "ba8ac29a1f4f5da756917cde0a641c75",
-        sha1: "2711d4e71e4ca054b00cfa9eeecd4fb5ceb8c177",
-        sha256:
-          "c294a5d63a4d352cabc20be926f274e912f72cfb098f6546bf2d3d1bc872ffb9",
-      },
-      dob: { date: "1977-09-15T20:03:21.437Z", age: 47 },
-      registered: { date: "2019-09-23T14:28:14.229Z", age: 5 },
-      phone: "55095464",
-      cell: "49152546",
-      id: { name: "FN", value: "15097705825" },
-      picture: {
-        large: "https://randomuser.me/api/portraits/women/0.jpg",
-        medium: "https://randomuser.me/api/portraits/med/women/0.jpg",
-        thumbnail: "https://randomuser.me/api/portraits/thumb/women/0.jpg",
-      },
-      nat: "NO",
-    },
-  ],
-  info: { seed: "a84a3a7c718f08f5", results: 1, page: 1, version: "1.4" },
-};
+import GenderFilter from "../gender-filter/gender-filter";
 
 const UserCardList = () => {
-  const items = MOCK.results;
-  // const { data } = await apiClient.get<RandomUserApiResponse>(
-  //   "/?page=1&results=5&seed=abc"
-  // );
+  const [nat, setNat] = useState<string | null>("");
+  const isInitialMount = useRef(true);
+  const debouncedNat = useDebounce(nat, 500);
+  const [gender, setGender] = useState<"male" | "female" | "any">("any");
+  const initialUrl = useRef(`/?nat=gb&gender=any&page=1&results=10&seed=abc`);
 
-  // console.log(data);
   const {
     data,
     isLoading,
@@ -254,11 +24,40 @@ const UserCardList = () => {
     error,
     hasMore,
     loadingRef,
+    setUrl,
     refresh,
   } = useInfiniteScrollApi<RandomUserApiResponse>({
+    initialUrl: initialUrl.current as RelativeUrl,
     pageSize: 10,
-    threshold: 300,
+    threshold: 500,
   });
+
+  // Update API URL when filters/search change
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+
+    const genderParam = gender === "any" ? "" : `&gender=${gender}`;
+    const newUrl = `/?nat=${
+      debouncedNat || ""
+    }${genderParam}&page=1&results=10` as RelativeUrl;
+
+    // Only update if URL actually changed
+    if (newUrl !== initialUrl.current) {
+      setUrl(newUrl);
+      initialUrl.current = newUrl;
+    }
+  }, [debouncedNat, gender, setUrl]);
+
+  const handleSearchChange = (value: string) => {
+    setNat(value.trim().toLowerCase());
+  };
+
+  const handleGenderChange = (value: "male" | "female" | "any") => {
+    setGender(value);
+  };
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -271,14 +70,28 @@ const UserCardList = () => {
   }
 
   return (
-    <div className={styles["user-list"]}>
-      <button
-        onClick={refresh}
-        disabled={isLoading}
-        className={styles["user-list__refresh-btn"]}
-      >
-        Refresh
-      </button>
+    <div className={`${styles["user-list"]} container`}>
+      <div className={styles["user-list__action-bar"]}>
+        <div className={styles["user-list__search"]}>
+          <div>
+            <SearchInput
+              value={nat || ""}
+              onChange={handleSearchChange}
+              placeholder="Search by Nationality (e.g., gb, us, fr)"
+            />
+          </div>
+          <div>
+            <GenderFilter value={gender} onChange={handleGenderChange} />
+          </div>
+        </div>
+        <button
+          onClick={refresh}
+          disabled={isLoading}
+          className={styles["user-list__refresh-btn"]}
+        >
+          <IoRefresh size={18} />
+        </button>
+      </div>
 
       <AnimatePresence>
         {data.map((user, index) => (
@@ -290,7 +103,7 @@ const UserCardList = () => {
             transition={{ duration: 0.3 }}
             className={styles["user-list__card"]}
           >
-            <div className={`${styles["user-cards"]} container`}>
+            <div className={styles["user-cards"]}>
               <UserCard key={user.id.value} index={index + 1} user={user} />
             </div>
           </motion.div>

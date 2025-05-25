@@ -1,0 +1,24 @@
+.search-input-wrapper {
+  position: relative;
+  width: 100%;
+
+  &__icon {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-mute);
+  }
+
+  &__search-input {
+    padding: 0.5rem 3rem 0.5rem;
+    border: 1px solid var(--border-color);
+    width: 100%;
+    background-color: var(--bg-background);
+    border-radius: 4px;
+
+    &::placeholder {
+      color: var(--text-mute);
+    }
+  }
+}

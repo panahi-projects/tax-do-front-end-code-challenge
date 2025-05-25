@@ -51,9 +51,7 @@ const UserProfilePage = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const response = await apiClient.get<RandomUserApiResponse>(
-        `/?id=${id}&seed=abc`
-      );
+      const response = await apiClient.get<RandomUserApiResponse>(`/?id=${id}`);
       const data = response.data.results[0];
       console.log("data", data);
 

@@ -20,7 +20,7 @@ class ApiClient {
   }
 
   public async get<T>(
-    url: RelativeUrl,
+    url: string,
     config?: AxiosRequestConfig
   ): Promise<ApiResponse<T>> {
     return this.instance.get<T>(url, config);
