@@ -34,8 +34,9 @@ const UserProfileCard = ({ user }: UserProfileCardProps) => {
           width={96}
           height={96}
           src={user.picture.medium}
-          alt={user.name.last}
+          alt="avatar"
           className={styles["user-profile-card__avatar"]}
+          unoptimized
         />
       )}
 

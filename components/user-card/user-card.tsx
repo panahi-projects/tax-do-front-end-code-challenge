@@ -23,9 +23,9 @@ const UserCard: React.FC<UserCardProps> = ({ user, index }) => {
           src={user.picture.medium}
           width={48}
           height={48}
-          alt="alt"
+          alt="avatar"
           className={styles["user-card__avatar"]}
-          unoptimized={process.env.NODE_ENV !== "production"} // Only optimize in production
+          unoptimized
           priority={(index && index < 3) as boolean}
         />
       )}
