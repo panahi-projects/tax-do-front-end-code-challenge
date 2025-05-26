@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "randomuser.me",
-        pathname: "/api/portraits/**",
+        pathname: "/portraits/**",
       },
       {
         protocol: "https",
@@ -20,7 +20,6 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
     ],
-    domains: ["randomuser.me"],
     minimumCacheTTL: 60 * 5, // Cache images for 5 minutes
     formats: ["image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
