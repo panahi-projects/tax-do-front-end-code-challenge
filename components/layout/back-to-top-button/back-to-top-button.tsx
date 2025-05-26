@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import styles from "./back-to-top-button.module.scss";
+import { FaArrowUp } from "react-icons/fa6";
 
 const BackToTopButton = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -32,7 +33,9 @@ const BackToTopButton = () => {
           className={styles.button}
           aria-label="Back to top"
         >
-          <span className={styles.arrow}>&uarr;</span>
+          <span className={styles.arrow}>
+            <FaArrowUp size={24} />
+          </span>
         </button>
       )}
     </div>
